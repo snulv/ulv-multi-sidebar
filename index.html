@@ -17,35 +17,31 @@
       <script src="multi-sidebar.js"></script>
     </head>
     <body ng-controller="mainController">
-
-        <!-- HEADER AND NAVBAR -->
-        <header>
-            <nav class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Demo</a>
-                </div>
-            </div>
-            </nav>
-        </header>
-
         <!-- MAIN CONTENT AND INJECTED VIEWS -->
         <div id="main" class="container-fluid">
-		<ulv-multi-sidebar focus="showSidebar">
+		<div class="row">
+			<div class="col-md-12">
+			<ulv-multi-sidebar focus="showSidebar">
   			<div transclude-to="menu">
 				<div class="list-group">
-  					<a ng-click="changeView()" class="list-group-item active">Cras justo odio</a>
-					<a ng-click="changeView()" class="list-group-item">Dapibus ac facilisis in</a>
-  					<a ng-click="changeView()" class="list-group-item">Morbi leo risus</a>
-					<a ng-click="changeView()" class="list-group-item">Porta ac consectetur ac</a>
-					<a ng-click="changeView()" class="list-group-item">Vestibulum at eros</a>
+  					<a ng-click="changeView()" class="list-group-item active">Click</a>
+					<a ng-click="changeView()" class="list-group-item">To</a>
+  					<a ng-click="changeView()" class="list-group-item">Toggle</a>
+					<a ng-click="changeView()" class="list-group-item">The</a>
+					<a ng-click="changeView()" class="list-group-item">View</a>
 				</div>
   			</div>
   			<div transclude-to="body">
-				<div ng-click="changeView()" class="btn btn-default">Return to list view</div>
-				Content of the body
+				<div class="row" style="margin-left:15px;">
+					<div class="col-md-12">
+						<div ng-click="changeView()" class="btn btn-default">Return to list view</div>
+						<p>By making the browser mobile size one can toggle between showing and hiding sidebar.</p>
+					</div>
+				</div>
   			</div>
-		</ulv-multi-sidebar>
+			</ulv-multi-sidebar>
+			</div>
+		</div
         </div>
 
 	<script>
