@@ -1,6 +1,6 @@
     <!-- index.html -->
     <!DOCTYPE html>
-    <html>
+    <html ng-app="demoApp">
     <head>
       <!-- SCROLLS -->
       <!-- load bootstrap and fontawesome via CDN -->
@@ -9,7 +9,9 @@
       <link rel="stylesheet" href="multi-sidebar.css" />
       <!-- SPELLS -->
       <!-- load angular and angular route via CDN -->
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+      
+      <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
       <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-swipe.js"></script>-->
       <script src="multi-sidebar.js"></script>
     </head>
@@ -34,8 +36,14 @@
 
         <!-- MAIN CONTENT AND INJECTED VIEWS -->
         <div id="main" class="container-fluid">
-		Hallo
-
+		<ulv-multi-sidebar focus="true">
+  			<div transclude-to="menu">
+	    			Siderubareru
+  			</div>
+  			<div transclude-to="body">
+    				bodyeru
+  			</div>
+		</ulv-multi-sidebar>
         </div>
 
 	<script>

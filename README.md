@@ -4,6 +4,7 @@ This is a minimalistic reusable responsive sidebar. Using a simple service that 
 
 ####Requirements
 
+* JQuery
 * Bootstrap 3
 * AngularJS
 
@@ -29,3 +30,7 @@ This is a minimalistic reusable responsive sidebar. Using a simple service that 
 </ulv-multi-sidebar>
 ```
 *to the view where you want the sidebar to be
+
+##Running demo
+To run the demo in index.html, simply run a node http-server in the folder. If you don't have it installed simply run
+* npm install -g http-server

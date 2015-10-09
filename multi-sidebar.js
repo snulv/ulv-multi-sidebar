@@ -75,7 +75,7 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 					
 					//find target
 					var destination = iElem.find("[transclude-id='" + destinationId + "']");
-						
+				
 					// append target if found
 					if (destination.length) {
 							
