@@ -14,9 +14,9 @@ This is a minimalistic reusable responsive sidebar. Using a simple service that 
 * Clone repository
 * Add the following to your index.html
 ```html
+  <link rel="stylesheet" href="[locationofmodule]/angular-multi-sidebar/multi-sidebar.css">
   <script src="[locationofmodule]/angular-multi-sidebar/multi-sidebar.js""></script>
 ```
-* Add`<link rel="stylesheet" href="[locationofmodule]/angular-multi-sidebar/multi-sidebar.css">` to the `<head>` of your index.html
 * Add the `snulvin.angular-multi-sidebar` module to your Angular module list (e.g. in a main app.js file: `angular.module('yourMainModule', ['snulvin.angular-multi-sidebar'])`)
 * And add:
 ```html
