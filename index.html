@@ -2,6 +2,7 @@
     <!DOCTYPE html>
     <html ng-app="demoApp">
     <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
       <!-- SCROLLS -->
       <!-- load bootstrap and fontawesome via CDN -->
       <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
@@ -15,7 +16,7 @@
       <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-swipe.js"></script>-->
       <script src="multi-sidebar.js"></script>
     </head>
-    <body>
+    <body ng-controller="mainController">
 
         <!-- HEADER AND NAVBAR -->
         <header>
@@ -24,24 +25,25 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">Demo</a>
                 </div>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                    <li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
-                    <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
-                </ul>
             </div>
             </nav>
         </header>
 
         <!-- MAIN CONTENT AND INJECTED VIEWS -->
         <div id="main" class="container-fluid">
-		<ulv-multi-sidebar focus="true">
+		<ulv-multi-sidebar focus="showSidebar">
   			<div transclude-to="menu">
-	    			Content of the sidebar
+				<div class="list-group">
+  					<a ng-click="changeView()" class="list-group-item active">Cras justo odio</a>
+					<a ng-click="changeView()" class="list-group-item">Dapibus ac facilisis in</a>
+  					<a ng-click="changeView()" class="list-group-item">Morbi leo risus</a>
+					<a ng-click="changeView()" class="list-group-item">Porta ac consectetur ac</a>
+					<a ng-click="changeView()" class="list-group-item">Vestibulum at eros</a>
+				</div>
   			</div>
   			<div transclude-to="body">
-    				Content of the body
+				<div ng-click="changeView()" class="btn btn-default">Return to list view</div>
+				Content of the body
   			</div>
 		</ulv-multi-sidebar>
         </div>
@@ -54,9 +56,14 @@
 	    demoApp.controller('mainController', function($scope) {
 
         	// create a message to display in our view
-	        $scope.message = 'Everyone come and see how good I look!';
+	        $scope.showSidebar = true;
+
+		$scope.changeView = function() {
+			console.log('test');
+			$scope.showSidebar = !$scope.showSidebar;
+		}
 	    });
-	</script
+	</script>
 
     </body>
     </html>
