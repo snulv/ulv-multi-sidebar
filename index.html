@@ -1,65 +1,95 @@
-    <!-- index.html -->
-    <!DOCTYPE html>
-    <html ng-app="demoApp">
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-      <!-- SCROLLS -->
-      <!-- load bootstrap and fontawesome via CDN -->
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
-      <link rel="stylesheet" href="multi-sidebar.css" />
-      <!-- SPELLS -->
-      <!-- load angular and angular route via CDN -->
-      
-      <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
-      <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-swipe.js"></script>-->
-      <script src="multi-sidebar.js"></script>
-    </head>
-    <body ng-controller="mainController">
-        <!-- MAIN CONTENT AND INJECTED VIEWS -->
-        <div id="main" class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-			<ulv-multi-sidebar focus="showSidebar">
-  			<div transclude-to="menu">
-				<div class="list-group">
-  					<a ng-click="changeView()" class="list-group-item active">Click</a>
-					<a ng-click="changeView()" class="list-group-item">To</a>
-  					<a ng-click="changeView()" class="list-group-item">Toggle</a>
-					<a ng-click="changeView()" class="list-group-item">The</a>
-					<a ng-click="changeView()" class="list-group-item">View</a>
+	<!-- index.html -->
+	<!DOCTYPE html>
+	<html ng-app="demoApp">
+	<head>
+	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	  <!-- SCROLLS -->
+	  <!-- load bootstrap and fontawesome via CDN -->
+	  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+	  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+	  <link rel="stylesheet" href="multi-sidebar.css" />
+	  <!-- SPELLS -->
+	  <!-- load angular and angular route via CDN -->
+	  
+	  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+	  <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-swipe.js"></script>-->
+	  <script src="multi-sidebar.js"></script>
+	</head>
+	<body ng-controller="mainController">
+	<style>
+
+
+	
+	</style>
+
+		<!-- MAIN CONTENT AND INJECTED VIEWS -->
+		<div id="main" class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<ulv-multi-sidebar id="sidebar" focus="showSidebar1">
+						<div transclude-sidebar="menu">
+							<div class="list-group">
+								<a ng-click="changeView()" class="list-group-item active">I</a>
+								<a ng-click="changeView()" class="list-group-item">am</a>
+								<a ng-click="changeView()" class="list-group-item">in</a>
+								<a ng-click="changeView()" class="list-group-item">sidebar</a>
+								<a ng-click="changeView()" class="list-group-item">1</a>
+							</div>
+						</div>
+						<div transclude-sidebar="body">
+							<div class="row" style="background-color: yellow;height:500px;">
+								<button class="btn btn-default" ng-click="toggleSidebar1()">1</button>
+								This is the body of sidebar 1
+								<div class="col-md-12">
+									<ulv-multi-sidebar id="sidebarer" focus="showSidebar2" break-width="400">
+										<div transclude-sidebarer="menu">
+											<div class="row" style="background-color: green;">
+												This is the sidebar of sidebar 2
+											</div>
+										</div>
+										<div transclude-sidebarer="body">
+											<div class="row" style="background-color: blue;">
+												<button class="btn btn-default" ng-click="toggleSidebar2()">1</button>
+												This is the body of sidebar 2, as you can see sidebar 2 is inside sidebar 1
+											</div>
+										</div>
+									</ulv-multi-sidebar>
+								</div>
+							</div>
+						</div>
+					</ulv-multi-sidebar>
 				</div>
-  			</div>
-  			<div transclude-to="body">
-				<div class="row" style="margin-left:15px;">
-					<div class="col-md-12">
-						<div ng-click="changeView()" class="btn btn-default">Return to list view</div>
-						<p>By making the browser mobile size one can toggle between showing and hiding sidebar.</p>
-					</div>
-				</div>
-  			</div>
-			</ulv-multi-sidebar>
 			</div>
-		</div
-        </div>
+		</div>
 
 	<script>
-	    // create the module and name it demoApp
-	    var demoApp = angular.module('demoApp', ['snulvin.angular-multi-sidebar']);
+		// create the module and name it demoApp
+		var demoApp = angular.module('demoApp', ['snulvin.angular-multi-sidebar']);
 
-	    // create the controller and inject Angular's $scope
-	    demoApp.controller('mainController', function($scope) {
+		// create the controller and inject Angular's $scope
+		demoApp.controller('mainController', function($scope) {
 
-        	// create a message to display in our view
-	        $scope.showSidebar = true;
+			// create a message to display in our view
+			$scope.showSidebar1 = true;
+			$scope.showSidebar2 = true;
 
-		$scope.changeView = function() {
-			console.log('test');
-			$scope.showSidebar = !$scope.showSidebar;
-		}
-	    });
+			$scope.toggleSidebar1 = function() {
+				if ($scope.showSidebar1) {
+					$scope.showSidebar1 = false;
+				} else {
+					$scope.showSidebar1 = true;
+				}
+			};
+			$scope.toggleSidebar2 = function(bool) {
+				if ($scope.showSidebar2) {
+					$scope.showSidebar2 = false;
+				} else {
+					$scope.showSidebar2 = true;
+				}
+			};
+		});
 	</script>
 
-    </body>
-    </html>
+	</body>
+	</html>

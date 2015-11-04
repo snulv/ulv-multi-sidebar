@@ -1,12 +1,14 @@
-<div class="row">
+<div class="row" style="padding-left:15px;">
 	<div class="col-md-12">
-		<div id="snulvin-wrapper" ng-class="focus ? 'sidebar toggled' : 'sidebar'" ng-swipe-right="rightSwipe()" ng-swipe-left="leftSwipe()">
-			<div id="sidebar-wrapper">	
+		<div class="row row-canvas">
+			<div ng-class="getSidebarClass()">	
 				<div transclude-id="menu"></div>
 			</div>
-			<div id="page-content-wrapper" >
+			<div ng-class="getContentClass()">
 				<div transclude-id="body"></div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<!--  -->

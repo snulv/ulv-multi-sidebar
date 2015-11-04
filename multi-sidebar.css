@@ -1,77 +1,34 @@
-#snulvin-wrapper {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+/*
+ * Style tweaks
+ * --------------------------------------------------
+ */
+html,
+body {
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
 
-#snulvin-wrapper.toggled {
-    padding-left: 250px;
+.row-canvas {
+    position:relative;
+    left: 0;
 }
-
-#sidebar-wrapper {
-    z-index: 1000;
-    position: fixed;
-    left: 250px;
-    width: 0;
-    height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+.easeout {
+    -webkit-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+        transition: all .25s ease-out;
 }
-
-#snulvin-wrapper.toggled #sidebar-wrapper {
-    width: 250px;
-}
-
-#page-content-wrapper {
-    width: 100%;
+.offcanvas {
+    overflow:hidden;
     position: absolute;
+    width: 0%; /* 6 columns */
+    padding:0;
+    top:0;
+    margin:0;
 }
 
-#snulvin-wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: -250px;
-}
+.content-half {
+    padding-left:15px;
+}   
 
-/* Sidebar Styles */
-
-.sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 250px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-@media(min-width:768px) {
-    #snulvin-wrapper {
-        padding-left: 250px;
-    }
-
-    #snulvin-wrapper.toggled {
-        padding-left: 250px;
-    }
-
-    #sidebar-wrapper {
-        width: 250px;
-    }
-
-    #snulvin-wrapper.toggled #sidebar-wrapper {
-        width: 250;
-    }
-
-    #page-content-wrapper {
-        position: relative;
-    }
-
-    #snulvin-wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-right: 0;
-    }
+.offcanvas-show {
+    width: 50%;
 }

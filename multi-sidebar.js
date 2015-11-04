@@ -25,17 +25,36 @@ TODO
 var scripts = document.getElementsByTagName("script");
 var currentScriptPath = scripts[scripts.length-1].src;
 
-angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar', ['MultiTransclude', function (MultiTransclude) {
+
+
+angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar', ['MultiTransclude', 'RecursionHelper', '$window', '$log', function (MultiTransclude, RecursionHelper, $window, $log) {
 
 	return {
 		restrict: 'E',
 		scope: {
 			focus: '=',
+			id: '@',
+			breakWidth: '='
 		},
-
 		transclude: true,
 		templateUrl: currentScriptPath.replace('multi-sidebar.js', 'multi-sidebar.html'),
-		controller: function($scope) {
+		controller: function($scope, $element) {
+			/*
+			* Sets standard values
+			*/
+			if(!$scope.id) { $scope.id = 'to'; }
+			if(!$scope.focus) { $scope.focus = true; }
+			if(!$scope.breakWidth) { $scope.breakWidth = 768; }
+			/*
+			* Checks if the current innerwidth is mobile sized
+			*/
+			$scope.isMobileWidth = function(size) {
+				var isMobile = false;
+				if (size < $scope.breakWidth) {
+					isMobile = true;
+				}
+				return isMobile;
+			};
 			/*
 			* Handles user swiping right
 			* - Also used on button clicks that does the same view change
@@ -51,16 +70,73 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 			$scope.leftSwipe = function() {
 				$scope.focus = false;
 			};
+
+			$scope.toggleView = function() {
+				if($scope.focus) {
+					$scope.focus = false;
+				} else {
+					$scope.focus = true;
+				}
+			};
+
+			$scope.getSidebarClass = function() {
+				var returnClass = 'col-xs-3';
+				if ($scope.isMobile) {
+					returnClass = 'col-xs-6 offcanvas';
+					if ($scope.focus) {
+						returnClass = 'col-xs-6 easeout offcanvas-show';
+					}
+					
+				}
+				return returnClass;
+			};
+
+			$scope.getContentClass = function() {
+				var returnClass = 'col-xs-9';
+				if ($scope.isMobile) {
+					returnClass = 'col-xs-12 content-half';
+					if ($scope.focus) {
+						returnClass = 'col-xs-6';
+					}
+					
+				}
+				return returnClass;
+			};
+
+			
 		},
-		link: function (scope, iElem, iAttrs, ctrl, transcludeFn) {
+		link: function (scope, element, iAttrs, ctrl, transcludeFn) {
+			
+			scope.isMobile = scope.isMobileWidth($window.innerWidth);
+			/*
+			* Checks if mobile size is activated
+			*/
+			angular.element($window).bind('resize', function() {
+				scope.isMobile = scope.isMobileWidth(element.parent().width());
+				$log.log(scope.id);
+				scope.$apply();
+			});
+			
+			
 			// Populates the correct elements in the diretive with the correct transcluded content
-			MultiTransclude.transclude(iElem, transcludeFn);
-		}        
+			MultiTransclude.transclude(element, transcludeFn, scope.id);
+		}/*,
+		compile: function(element, attrs) {
+			if(!attrs.id) { attrs.id = 'standardId'; }
+			if(!attrs.focus) { attrs.focus = false; }
+			if(!attrs.breakWidth) { attrs.breakWidth = 768; }
+		}*/
+		/*,
+		compile: function(element) {
+            // Use the compile function from the RecursionHelper,
+            // And return the linking function(s) which it returns
+            return RecursionHelper.compile(element);
+        }*/
   	};
 }])
 .factory("MultiTransclude", function() {
 	return {
-		transclude: function(iElem, transcludeFn) {
+		transclude: function(iElem, transcludeFn, id) {
 			 transcludeFn( function(clone) {
 				
 				angular.forEach( clone, function (cloneEl) {
@@ -71,7 +147,7 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 					}
 						
 					// get target name from clone
-					var destinationId = cloneEl.attributes["transclude-to"].value;
+					var destinationId = cloneEl.attributes['transclude-' + id].value;
 					
 					//find target
 					var destination = iElem.find("[transclude-id='" + destinationId + "']");
@@ -82,7 +158,7 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 						destination.append(cloneEl);
 							
 					} else {
-					 // if target isn't found (missing/invalid transclude), clean up and throw error         
+					 	// if target isn't found (missing/invalid transclude), clean up and throw error         
 						cloneEl.remove();
 			 
 						throw new Error(
@@ -94,4 +170,45 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 			});
 		}
 	};
-});
+})
+.factory('RecursionHelper', ['$compile', function($compile){
+    return {
+        /**
+         * Manually compiles the element, fixing the recursion loop.
+         * @param element
+         * @param [link] A post-link function, or an object with function(s) registered via pre and post properties.
+         * @returns An object containing the linking functions.
+         */
+        compile: function(element, link){
+            // Normalize the link parameter
+            if(angular.isFunction(link)){
+                link = { post: link };
+            }
+
+            // Break the recursion loop by removing the contents
+            var contents = element.contents().remove();
+            var compiledContents;
+            return {
+                pre: (link && link.pre) ? link.pre : null,
+                /**
+                 * Compiles and re-adds the contents
+                 */
+                post: function(scope, element){
+                    // Compile the contents
+                    if(!compiledContents){
+                        compiledContents = $compile(contents);
+                    }
+                    // Re-add the compiled contents to the element
+                    compiledContents(scope, function(clone){
+                        element.append(clone);
+                    });
+
+                    // Call the post-linking function, if any
+                    if(link && link.post){
+                        link.post.apply(null, arguments);
+                    }
+                }
+            };
+        }
+    };
+}]);
