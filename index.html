@@ -47,7 +47,7 @@
 								<div class="col-md-12">
 									<div class="well" style="height:100%">
 										<button ng-if="collapsedSidebar1" class="btn btn-default" ng-click="toggleSidebar1()">
-											<i ng-class="showSidebar1 ? 'fa fa-chevron-right text-' : 'fa fa-chevron-left'"></i>
+											<i ng-class="showSidebar1 ? 'fa fa-chevron-left' : 'fa fa-chevron-right'"></i>
 										</button>
 										This is the body of sidebar 1
 										<ulv-multi-sidebar id="sidebar2" active="showSidebar2" break-width="400"  collapsed="collapsedSidebar2">
@@ -57,13 +57,8 @@
 														<div class="panel panel-success">
 															<div class="panel-heading">
 																<div class="panel-heading">
-																	Sidebar 2
+																	This is the sidebar of sidebar 2.
 																</div>
-															</div>
-															<div class="panel-body">
-																<p>
-																This is the sidebar of sidebar 2.
-																</p>
 															</div>
 														</div>
 													</div>
@@ -76,9 +71,9 @@
 															<div class="panel-heading">
 																<h5 class="text-center">
 																	<a ng-if="collapsedSidebar2" class="pull-left" ng-click="toggleSidebar2()">
-																		<i ng-class="showSidebar2 ? 'fa fa-chevron-left text-' : 'fa fa-chevron-right'"></i>
+																		<i ng-class="showSidebar2 ? 'fa fa-chevron-left' : 'fa fa-chevron-right'"></i>
 																	</a>
-																	Sidebar 2
+																	Body 2
 																</h5>
 															</div>
 															<div class="panel-body">
@@ -99,13 +94,8 @@
 														<div class="panel panel-danger">
 															<div class="panel-heading">
 																<div class="panel-heading">
-																	Sidebar 3
+																	This is the sidebar of sidebar 3.
 																</div>
-															</div>
-															<div class="panel-body">
-																<p>
-																This is the sidebar of sidebar 3.
-																</p>
 															</div>
 														</div>
 													</div>
@@ -118,14 +108,14 @@
 															<div class="panel-heading">
 																<h5 class="text-center">
 																	<a ng-if="collapsedSidebar3" class="pull-left" ng-click="toggleSidebar3()">
-																		<i ng-class="showSidebar3 ? 'fa fa-chevron-left text-' : 'fa fa-chevron-right'"></i>
+																		<i ng-class="showSidebar3 ? 'fa fa-chevron-left' : 'fa fa-chevron-right'"></i>
 																	</a>
-																	Sidebar 3
+																	Body 3
 																</h5>
 															</div>
 															<div class="panel-body">
 																<p>
-																This is the body of sidebar 3, as you can see sidebar 2 is inside sidebar 1	
+																	This is the body of sidebar 3, as you can see sidebar 3 is inside sidebar 1	
 																</p>
 															</div>
 														</div>
@@ -133,7 +123,7 @@
 												</div>
 											</div>
 										</ulv-multi-sidebar>
-										And we still go tthe body of sidebar 1 here
+										And we still got the body of sidebar 1 here
 									</div>
 								</div>
 							</div>
