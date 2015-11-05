@@ -27,8 +27,13 @@
 		<div id="main" class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-					<ulv-multi-sidebar id="sidebar" focus="showSidebar1">
+					<ulv-multi-sidebar id="sidebar" active="showSidebar1" collapsed="collapsedSidebar1">
 						<div transclude-sidebar="menu">
+							<div class="row">
+								<div class="col-md-12">
+									
+								</div>
+							</div>
 							<div class="list-group">
 								<a ng-click="changeView()" class="list-group-item active">I</a>
 								<a ng-click="changeView()" class="list-group-item">am</a>
@@ -38,23 +43,98 @@
 							</div>
 						</div>
 						<div transclude-sidebar="body">
-							<div class="row" style="background-color: yellow;height:500px;">
-								<button class="btn btn-default" ng-click="toggleSidebar1()">1</button>
-								This is the body of sidebar 1
+							<div class="row" style="height:500px;">
 								<div class="col-md-12">
-									<ulv-multi-sidebar id="sidebarer" focus="showSidebar2" break-width="400">
-										<div transclude-sidebarer="menu">
-											<div class="row" style="background-color: green;">
-												This is the sidebar of sidebar 2
+									<div class="well" style="height:100%">
+										<button ng-if="collapsedSidebar1" class="btn btn-default" ng-click="toggleSidebar1()">
+											<i ng-class="showSidebar1 ? 'fa fa-chevron-right text-' : 'fa fa-chevron-left'"></i>
+										</button>
+										This is the body of sidebar 1
+										<ulv-multi-sidebar id="sidebar2" active="showSidebar2" break-width="400"  collapsed="collapsedSidebar2">
+											<div transclude-sidebar2="menu">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="panel panel-success">
+															<div class="panel-heading">
+																<div class="panel-heading">
+																	Sidebar 2
+																</div>
+															</div>
+															<div class="panel-body">
+																<p>
+																This is the sidebar of sidebar 2.
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
-										</div>
-										<div transclude-sidebarer="body">
-											<div class="row" style="background-color: blue;">
-												<button class="btn btn-default" ng-click="toggleSidebar2()">1</button>
-												This is the body of sidebar 2, as you can see sidebar 2 is inside sidebar 1
+											<div transclude-sidebar2="body">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="panel panel-success">
+															<div class="panel-heading">
+																<h5 class="text-center">
+																	<a ng-if="collapsedSidebar2" class="pull-left" ng-click="toggleSidebar2()">
+																		<i ng-class="showSidebar2 ? 'fa fa-chevron-left text-' : 'fa fa-chevron-right'"></i>
+																	</a>
+																	Sidebar 2
+																</h5>
+															</div>
+															<div class="panel-body">
+																<p>
+																This is the body of sidebar 2, as you can see sidebar 2 is inside sidebar 1	
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
-										</div>
-									</ulv-multi-sidebar>
+										</ulv-multi-sidebar>
+										This is also the body of sidebar 1
+										<ulv-multi-sidebar id="sidebar3" active="showSidebar3" break-width="400"  collapsed="collapsedSidebar3">
+											<div transclude-sidebar3="menu">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="panel panel-danger">
+															<div class="panel-heading">
+																<div class="panel-heading">
+																	Sidebar 3
+																</div>
+															</div>
+															<div class="panel-body">
+																<p>
+																This is the sidebar of sidebar 3.
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div transclude-sidebar3="body">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="panel panel-danger">
+															<div class="panel-heading">
+																<h5 class="text-center">
+																	<a ng-if="collapsedSidebar3" class="pull-left" ng-click="toggleSidebar3()">
+																		<i ng-class="showSidebar3 ? 'fa fa-chevron-left text-' : 'fa fa-chevron-right'"></i>
+																	</a>
+																	Sidebar 3
+																</h5>
+															</div>
+															<div class="panel-body">
+																<p>
+																This is the body of sidebar 3, as you can see sidebar 2 is inside sidebar 1	
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</ulv-multi-sidebar>
+										And we still go tthe body of sidebar 1 here
+									</div>
 								</div>
 							</div>
 						</div>
@@ -71,8 +151,12 @@
 		demoApp.controller('mainController', function($scope) {
 
 			// create a message to display in our view
-			$scope.showSidebar1 = true;
-			$scope.showSidebar2 = true;
+			$scope.showSidebar1 = false;
+			$scope.showSidebar2 = false;
+			$scope.showSidebar3 = false;
+			$scope.collapsedSidebar2 = false;
+			$scope.collapsedSidebar2 = false;
+			$scope.collapsedSidebar3 = false;
 
 			$scope.toggleSidebar1 = function() {
 				if ($scope.showSidebar1) {
@@ -81,11 +165,18 @@
 					$scope.showSidebar1 = true;
 				}
 			};
-			$scope.toggleSidebar2 = function(bool) {
+			$scope.toggleSidebar2 = function() {
 				if ($scope.showSidebar2) {
 					$scope.showSidebar2 = false;
 				} else {
 					$scope.showSidebar2 = true;
+				}
+			};
+			$scope.toggleSidebar3 = function() {
+				if ($scope.showSidebar3) {
+					$scope.showSidebar3 = false;
+				} else {
+					$scope.showSidebar3 = true;
 				}
 			};
 		});

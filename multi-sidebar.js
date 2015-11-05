@@ -32,9 +32,10 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 	return {
 		restrict: 'E',
 		scope: {
-			focus: '=',
+			active: '=',
+			minWidth: '=',
+			collapsed: '=',
 			id: '@',
-			breakWidth: '='
 		},
 		transclude: true,
 		templateUrl: currentScriptPath.replace('multi-sidebar.js', 'multi-sidebar.html'),
@@ -43,24 +44,25 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 			* Sets standard values
 			*/
 			if(!$scope.id) { $scope.id = 'to'; }
-			if(!$scope.focus) { $scope.focus = true; }
-			if(!$scope.breakWidth) { $scope.breakWidth = 768; }
+			if(!$scope.active) { $scope.active = false; }
+			if(!$scope.collapsed) { $scope.collapsed = false; }
+			if(!$scope.minWidth) { $scope.minWidth = 768; }
 			/*
 			* Checks if the current innerwidth is mobile sized
 			*/
-			$scope.isMobileWidth = function(size) {
-				var isMobile = false;
-				if (size < $scope.breakWidth) {
-					isMobile = true;
+			$scope.isTooSmall = function(size) {
+				var collapsed = false;
+				if (size < $scope.minWidth) {
+					collapsed = true;
 				}
-				return isMobile;
+				return collapsed;
 			};
 			/*
 			* Handles user swiping right
 			* - Also used on button clicks that does the same view change
 			*/
 			$scope.rightSwipe = function() {
-				$scope.focus = true;
+				$scope.active = true;
 			};
 
 			/*
@@ -68,34 +70,42 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 			* - Also used on button clicks that does the same view change
 			*/
 			$scope.leftSwipe = function() {
-				$scope.focus = false;
+				$scope.active = false;
 			};
 
+			/*
+			* Changes the current view
+			*/
 			$scope.toggleView = function() {
-				if($scope.focus) {
-					$scope.focus = false;
+				if($scope.active) {
+					$scope.active = false;
 				} else {
-					$scope.focus = true;
+					$scope.active = true;
 				}
 			};
 
+			/*
+			* Returns the correct class for the sidebar
+			*/
 			$scope.getSidebarClass = function() {
 				var returnClass = 'col-xs-3';
-				if ($scope.isMobile) {
+				if ($scope.collapsed) {
 					returnClass = 'col-xs-6 offcanvas';
-					if ($scope.focus) {
+					if ($scope.active) {
 						returnClass = 'col-xs-6 easeout offcanvas-show';
 					}
 					
 				}
 				return returnClass;
 			};
-
+			/*
+			* Returns the correct class for the content
+			*/
 			$scope.getContentClass = function() {
 				var returnClass = 'col-xs-9';
-				if ($scope.isMobile) {
+				if ($scope.collapsed) {
 					returnClass = 'col-xs-12 content-half';
-					if ($scope.focus) {
+					if ($scope.active) {
 						returnClass = 'col-xs-6';
 					}
 					
@@ -106,14 +116,12 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 			
 		},
 		link: function (scope, element, iAttrs, ctrl, transcludeFn) {
-			
-			scope.isMobile = scope.isMobileWidth($window.innerWidth);
+			scope.collapsed = scope.isTooSmall($window.innerWidth);
 			/*
-			* Checks if mobile size is activated
+			* Checks if the current element size is too small
 			*/
 			angular.element($window).bind('resize', function() {
-				scope.isMobile = scope.isMobileWidth(element.parent().width());
-				$log.log(scope.id);
+				scope.collapsed = scope.isTooSmall(element.parent().width());
 				scope.$apply();
 			});
 			
@@ -123,8 +131,8 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 		}/*,
 		compile: function(element, attrs) {
 			if(!attrs.id) { attrs.id = 'standardId'; }
-			if(!attrs.focus) { attrs.focus = false; }
-			if(!attrs.breakWidth) { attrs.breakWidth = 768; }
+			if(!attrs.active) { attrs.active = false; }
+			if(!attrs.minWidth) { attrs.minWidth = 768; }
 		}*/
 		/*,
 		compile: function(element) {

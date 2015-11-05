@@ -1,6 +1,6 @@
 ## Angular Multi Sidebar
 
-This is a minimalistic reusable responsive sidebar. Using a simple service that allows multiple transclusions in AngularJS, this sidebar brings some of the power of web components and Angular2 to AngularJS. Simply add the module to your project and use the directive in the view where you want the sidebar and put the content of the sidebare in a div with the attribute transclude-to="menu" and the conent of the main body in a div with the attribute transclude-to="body". When in mobile view the attribute focus="[bool]" decides to show sidebar or content. If you are using angular-swipe in your project you will also be able to swipe between the different views.
+This is a minimalistic reusable responsive sidebar. Using a simple service that allows multiple transclusions in AngularJS, this sidebar brings some of the power of web components and Angular2 to AngularJS. Simply add the module to your project and use the directive in the container where you want the sidebar and put the content of the sidebar in a div with the attribute transclude-to="menu" and the conent of the main body in a div with the attribute transclude-to="body". The directive can be used recursively within itself or multiple times in the same view. The directive hides the sidebar when the parent div becomes smaller than the min-width. 
 
 ####Demo
 [Demo!](https://snulvin.github.io/ulv-multi-sidebar)
@@ -23,16 +23,25 @@ This is a minimalistic reusable responsive sidebar. Using a simple service that 
 * Add the `snulvin.angular-multi-sidebar` module to your Angular module list (e.g. in a main app.js file: `angular.module('yourMainModule', ['snulvin.angular-multi-sidebar'])`)
 * And add:
 ```html
-<ulv-multi-sidebar focus="true">
-	<div transclude-to="menu">
+<ulv-multi-sidebar id="[string]" active="[boolean]" collapsed="[boolean]" min-width="[integer]">
+	<div transclude-[id]="menu">
 		<!-- Content to be in sidebar here -->
 	</div>
-	<div transclude-to="body">
+	<div transclude-[id]="body">
 		<!-- Content to be in body here -->
 	</div>
 </ulv-multi-sidebar>
 ```
-*to the view where you want the sidebar to be
+* To the view where you want the sidebar to be.
+* Make sure that the text following "transclude-" is the same as the id of the element. This is to avoid problems with recursivity.
+* It is not possible to run the directive within the sidebar of another, only within the body.
+* The attributes are as following
+```
+ id - The sidebars id, must be the same as the text following the "transclude-" inside the directive
+ active - A boolean that is true if the sidebar should currently be shown, used to controll the sidebar
+ collapsed - A boolean that is true if the sidebar is currently below it's min width
+ min-width - An integer that decides at which pixel length the sidebar should go from normal view to a minimized view
+```
 
 ##Running demo
 To run the demo in index.html, simply run a node http-server in the folder. If you don't have it installed simply run
