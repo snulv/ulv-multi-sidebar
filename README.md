@@ -5,6 +5,8 @@ This is a minimalistic reusable responsive sidebar. Using a simple service that 
 ####Demo
 [Demo!](https://snulvin.github.io/multi-sidebar)
 
+
+
 ####Requirements
 
 * JQuery
