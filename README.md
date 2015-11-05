@@ -17,10 +17,10 @@ This is a minimalistic reusable responsive sidebar. Using a simple service that 
 * Clone repository
 * Add the following to your index.html
 ```html
-  <link rel="stylesheet" href="[locationofmodule]/angular-multi-sidebar/multi-sidebar.css">
-  <script src="[locationofmodule]/angular-multi-sidebar/multi-sidebar.js""></script>
+  <link rel="stylesheet" href="[locationofmodule]/ulv-multi-sidebar/ulv-multi-sidebar.css">
+  <script src="[locationofmodule]/ulv-multi-sidebar/ulv-multi-sidebar.js""></script>
 ```
-* Add the `snulvin.angular-multi-sidebar` module to your Angular module list (e.g. in a main app.js file: `angular.module('yourMainModule', ['snulvin.angular-multi-sidebar'])`)
+* Add the `snulvin.ulv-multi-sidebar` module to your Angular module list (e.g. in a main app.js file: `angular.module('yourMainModule', ['snulvin.ulv-multi-sidebar'])`)
 * And add:
 ```html
 <ulv-multi-sidebar id="[string]" active="[boolean]" collapsed="[boolean]" min-width="[integer]">

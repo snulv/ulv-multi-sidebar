@@ -27,7 +27,7 @@ var currentScriptPath = scripts[scripts.length-1].src;
 
 
 
-angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar', ['MultiTransclude', 'RecursionHelper', '$window', '$log', function (MultiTransclude, RecursionHelper, $window, $log) {
+angular.module('snulvin.ulv-multi-sidebar', []).directive('ulvMultiSidebar', ['MultiTransclude', 'RecursionHelper', '$window', '$log', function (MultiTransclude, RecursionHelper, $window, $log) {
 
 	return {
 		restrict: 'E',
@@ -38,7 +38,7 @@ angular.module('snulvin.angular-multi-sidebar', []).directive('ulvMultiSidebar',
 			id: '@',
 		},
 		transclude: true,
-		templateUrl: currentScriptPath.replace('multi-sidebar.js', 'multi-sidebar.html'),
+		templateUrl: currentScriptPath.replace('ulv-multi-sidebar.js', 'ulv-multi-sidebar.html'),
 		controller: function($scope, $element) {
 			/*
 			* Sets standard values
